@@ -1,0 +1,5 @@
+fragment productFragment on Product {
+  name
+  description
+  weight
+}

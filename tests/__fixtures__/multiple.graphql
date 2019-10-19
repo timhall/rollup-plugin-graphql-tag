@@ -1,0 +1,11 @@
+query a {
+  name
+}
+
+query b {
+  title
+}
+
+query {
+  default
+}

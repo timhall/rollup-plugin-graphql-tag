@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should load and transform graphql schema 1`] = `
+"var schema = (function() {
+  const doc = {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"ObjectTypeDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Book\\"},\\"interfaces\\":[],\\"directives\\":[],\\"fields\\":[{\\"kind\\":\\"FieldDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"title\\"},\\"arguments\\":[],\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}},\\"directives\\":[]},{\\"kind\\":\\"FieldDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"author\\"},\\"arguments\\":[],\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Author\\"}},\\"directives\\":[]}]},{\\"kind\\":\\"ObjectTypeDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Author\\"},\\"interfaces\\":[],\\"directives\\":[],\\"fields\\":[{\\"kind\\":\\"FieldDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"String\\"}},\\"directives\\":[]},{\\"kind\\":\\"FieldDefinition\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"books\\"},\\"arguments\\":[],\\"type\\":{\\"kind\\":\\"ListType\\",\\"type\\":{\\"kind\\":\\"NamedType\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"Book\\"}}},\\"directives\\":[]}]}],\\"loc\\":{\\"start\\":0,\\"end\\":103}};
+  doc.loc.source = {\\"body\\":\\"\\\\n    type Book {\\\\n  title: String\\\\n  author: Author\\\\n}\\\\n\\\\ntype Author {\\\\n  name: String\\\\n  books: [Book]\\\\n}\\\\n\\\\n  \\",\\"name\\":\\"GraphQL request\\",\\"locationOffset\\":{\\"line\\":1,\\"column\\":1}};
+
+  return doc;
+})();
+
+export { schema as typeDefs };
+"
+`;
+
+exports[`should load and transform simple graphql queries 1`] = `
+"var simple = (function() {
+  const doc = {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":25}};
+  doc.loc.source = {\\"body\\":\\"\\\\n    query {\\\\n  name\\\\n}\\\\n\\\\n  \\",\\"name\\":\\"GraphQL request\\",\\"locationOffset\\":{\\"line\\":1,\\"column\\":1}};
+
+  return doc;
+})();
+
+var simple$1 = (function() {
+  const doc = {\\"kind\\":\\"Document\\",\\"definitions\\":[{\\"kind\\":\\"OperationDefinition\\",\\"operation\\":\\"query\\",\\"variableDefinitions\\":[],\\"directives\\":[],\\"selectionSet\\":{\\"kind\\":\\"SelectionSet\\",\\"selections\\":[{\\"kind\\":\\"Field\\",\\"name\\":{\\"kind\\":\\"Name\\",\\"value\\":\\"name\\"},\\"arguments\\":[],\\"directives\\":[]}]}}],\\"loc\\":{\\"start\\":0,\\"end\\":25}};
+  doc.loc.source = {\\"body\\":\\"\\\\n    query {\\\\n  name\\\\n}\\\\n\\\\n  \\",\\"name\\":\\"GraphQL request\\",\\"locationOffset\\":{\\"line\\":1,\\"column\\":1}};
+
+  return doc;
+})();
+
+export { simple as a, simple$1 as b };
+"
+`;
