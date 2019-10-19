@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-graphql-tag",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Tim Hall <tim.hall.engr@gmail.com>",
   "license": "MIT",
   "description": "Import graphql files with rollup",
