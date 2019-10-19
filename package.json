@@ -17,6 +17,7 @@
   "main": "dist/rollup-plugin-graphql-tag.cjs.js",
   "module": "dist/rollup-plugin-graphql-tag.es.js",
   "scripts": {
+    "typecheck": "tsc",
     "build": "rollup -c",
     "pretest": "npm run build",
     "test": "jest"

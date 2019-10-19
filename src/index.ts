@@ -5,7 +5,7 @@ import { extname } from 'path';
 import { createFilter } from 'rollup-pluginutils';
 
 const extensions = ['.graphql', '.gql'];
-const isGraphql = path => extensions.includes(extname(path));
+const isGraphql = (path: string) => extensions.includes(extname(path));
 
 interface Options {
   include?: string | RegExp | Array<string | RegExp>;
@@ -53,7 +53,7 @@ function compile(data: string): string {
   `;
 
   // 3. Extract operations into named exports
-  const named_operations = {};
+  const named_operations: { [name: string]: any } = {};
   for (const definition of doc.definitions) {
     if (definition.kind !== 'OperationDefinition' || !definition.name) continue;
 
