@@ -34,6 +34,29 @@ export default function graphqlTag(options: Options = {}): Plugin {
   };
 }
 
+function getReferenceNames(node: any) {
+    const references = [];
+
+    // Check node
+    if (node.kind === 'FragmentSpread') {
+        references.push(node.name.value);
+    } else if (node.kind === 'VariableDefinition' && node.type.kind === 'NamedType') {
+        references.push(node.type.name.value);
+    }
+
+    // Check related data
+    const nodesToCheck = [];
+    if (node.selectionSet) nodesToCheck.push(...node.selectionSet.selections);
+    if (node.variableDefinitions) nodesToCheck.push(...node.variableDefinitions);
+    if (node.definitions) nodesToCheck.push(...node.definitions);
+
+    nodesToCheck.forEach(node => {
+        references.push(...getReferenceNames(node));
+    });
+
+    return references;
+}
+
 function compile(data: string): string {
   // 1. Extract imports
   // TODO https://github.com/apollographql/graphql-tag/blob/50a850e484a60d95ddb99801c39785031e55b7a2/loader.js#L29
@@ -43,7 +66,7 @@ function compile(data: string): string {
   const doc = gql`
     ${data}
   `;
-  const default_export: string = dedent`
+  const defaultExport: string = dedent`
     export default (function() {
       const doc = ${JSON.stringify(doc)};
       doc.loc.source = ${JSON.stringify(doc.loc.source)};
@@ -53,17 +76,33 @@ function compile(data: string): string {
   `;
 
   // 3. Extract operations into named exports
-  const named_operations: { [name: string]: any } = {};
+  const namedOperations: { [name: string]: any } = {};
+  const indexedDefinitions: Record<string, any> = {};
+  doc.definitions.forEach((definition: any) => {
+    if (definition.name) {
+      indexedDefinitions[definition.name.value] = definition;
+    }
+  });
+
   for (const definition of doc.definitions) {
     if (definition.kind !== 'OperationDefinition' || !definition.name) continue;
 
     const name = definition.name.value;
-    if (!name || named_operations[name]) continue;
+    if (!name || namedOperations[name]) continue;
 
     // Extract sub-document
-    // TODO https://github.com/apollographql/graphql-tag/blob/50a850e484a60d95ddb99801c39785031e55b7a2/loader.js#L69
+    const document: { kind: string, definitions: any[], loc?: any } = { kind: doc.kind, definitions: [definition] };
+    if (doc.hasOwnProperty('loc')) document.loc = doc.loc;
+
+    const references: Record<string, any> = {};
+    getReferenceNames(document).forEach(name => {
+      const reference = indexedDefinitions[name];
+      if (reference) references[name] = reference;
+    });
+    document.definitions.push(...Object.values(references));
+    namedOperations[name] = document;
   }
-  const named_exports = Object.entries(named_operations)
+  const namedExports = Object.entries(namedOperations)
     .map(([name, document]) => {
       return dedent`
         export const ${name} = ${JSON.stringify(document)};
@@ -72,5 +111,5 @@ function compile(data: string): string {
     .join('\n');
 
   // 4. Combine module
-  return [imports, default_export, named_exports].filter(Boolean).join('\n\n');
+  return [imports, defaultExport, namedExports].filter(Boolean).join('\n\n');
 }
