@@ -1,3 +1,4 @@
+__Deprecated__: Rollup has since released an [official graphql plugin](https://github.com/rollup/plugins/tree/master/packages/graphql), `@rollup/plugin-graphql`, please use that instead. 
 # rollup-plugin-graphql-tag
 
 Import and preprocess graphql documents using `graphql-tag` with `rollup`.
